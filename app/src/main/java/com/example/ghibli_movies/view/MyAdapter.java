@@ -1,8 +1,8 @@
 package com.example.ghibli_movies.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,18 +66,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+
         final Film film = values.get(position);
         holder.txtHeader.setText(film.getTitle());
         holder.txtHeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(position);
+                Intent intent = new Intent(v.getContext(), MovieDetails.class);
+                String strDescription = film.getDescription();
+                intent.putExtra("Description : ", strDescription);
+                v.getContext().startActivity(intent);
+
+
             }
         });
 
-        holder.txtFooter.setText("Director " + film.getDirector());
+        holder.txtFooter.setText(film.getDirector() + " , " + film.getRelease_date());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
